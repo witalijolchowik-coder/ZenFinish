@@ -7,6 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="finisz.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
         
@@ -317,22 +318,9 @@
     <script>
         const PROJECTS = ["3LP S.A. Siechnice", "Adient Poland Sp. z o. o. Świebodzin PL", "Adient Poland Sp. z o.o. Świebodzin", "AGRO GOBARTO SP. Z O.O.", "Air Spiralo Poland Sp. z o.o. UZwPT", "ALL WINDOWS GROUP Sp. z o.o.", "ALL WINDOWS GROUP Sp. z o.o. PL", "Alpha Technology sp. z o.o Niepołomice", "Alstom Konstal S.A. Chorзów", "Alstom Konstal S.A. Chorзów (HS)", "Alstom Konstal S.A. PL", "Amбро Express Sp. z o.o. oddział Przykona", "Amбро Express Sp. z o.o. oddział Warszawa", "ANIMEX FOODS Sp. z o.o. oddział Morliny", "ANIMEX FOODS Sp. z o.o. oddział Morliny PL", "ANIMEX FOODS Sp. z o.o. oddział Opole", "ANIMEX FOODS Sp. z o.o. oddział Szczecин", "Anwis Sp. z o.o. PL", "Aptiv Services Poland S.A. oddział Jeлеśnia PL", "Arvato Polska Sp. z o.o. Brwinów", "Arvato Polska Sp. z o.o. Mszчonów", "Arvato Polska Sp. z o.o. Stryków oddział HM", "Arvato Polska Sp. z o.o. Stryków oddział ZARA", "Baks Kazimierz Sielski Karczew", "Barlineк Inwestycje Sp. z o.o. ПZwPT", "Barlineк Sp. z o.o. Barlinek", "Barry Callebaut Manufacturing Polska Sp. z o.o. PT", "Beko Poland Manufacturing Sp. z o.o. Radomsko", "Beko Poland Manufacturing Sp. z o.o. Radomsko PL", "Beko Poland Manufacturing Sp. z o.o. Wrocław PT", "BERRY SUPERFOS SP Z O.O.", "Biazet S.A. Białystok", "BILPLAST S.A. ПZwPT", "Biomasa Partner Group Sp. z o.o. Chociwel", "Bolsius Polska sp. z o.o.", "BORNE FURNITURE Sp. z o.o. oddział Barlineк ПZwPT", "BORNE FURNITURE Sp. z o.o. oddział Gorзв Wielkopolski ПZwPT", "Brembo Poland Sp. z o.o.", "Brembo Poland Sp. z o.o. PL", "BSH Sprzęт Gospodарства Domowego Sp. z o.o.", "BSH Sprzęт Gospodарства Domowego Sp. z o.o. PL", "Cerland Industry Sp. z o.o. oddział Bolesławiec", "CETES Cosmetics Poland Sp. z o.o. PT", "CINNO Poland Sp. z o. o.", "Conectiv Polska Sp z.o.o. Piaseчno PT", "Conectiv Polska Sp z.o.o. Piaseчno UZ", "Conectiv Polska Sp z.o.o. Piaseчno UZ PL", "Conectiv Polska Sp z.o.o. Piaseчno ПZwPT", "CONKRET Sp. z o.o.", "CSD Services Sp. z o.o.", "Dadelo S.A. Zelgoszcz", "DIY Logistic Services Polska Sp. z.o.o.", "DOBROPLAST FABRYКА OKIEN Sp. z o.o. - Stary Laskowiec", "Donaldson Sp. z o. o.", "EkoPartner Recykling Sp. z o.o. Lubin", "EkoPartner Recykling Sp. z o.o. Lubin PL", "Eldisy Polska Sp. z o.o Vorwerk", "Electropoli Poland Sp. z o.o. Nowa Sól", "Electropoli Poland Sp. z o.o. Nowa Sól PT", "Espersen Poland Sp. z o.o. oddział BoWiD PT", "Farm Frites Poland S.A. PT PL", "FAURECIA AUTOMOTIVE POLSKA S.A.", "FAURECIA AUTOMOTIVE POLSKA S.A. PL", "FAURECIA Gorзów S.A. 1", "FAURECIA GORZÓW S.A. 1 PL", "FAURECIA GORZÓS.A. 2", "Faurecia Waлbrzych S.A.", "Federal - Mogul Bimet S.A. PL", "FIEGE E-COM LOGISTICS Sp. z o.o.", "FIEGE E-COM WEST Sp. z o.o.", "FIEGE Sp. z o.o. oddział Mszчonów", "FLEXTRONICS INTERNATIONAL POLAND Sp. z o.o.", "FLEXTRONICS INTERNATIONAL POLAND Sp. z o.o. PL", "FM Logistic Jarosty sp. z o.o. Jarosty", "FORM-PLASTIC SP. Z O.O.", "GEDIA Poland sp. z o.o. Nowa Sól", "GERRESHEIMER BOLESŁAWIEC S.A. PT", "Grammer Automotive Polska Sp. z o.o. oddział Bielsko-Biała PL", "Granboard Sp. z o.o.", "Greenyard Frozen Poland Sp. z o.o. oddział D3брова Cheлmińska", "Greenyard Frozen Poland Sp. z o.o. oddział D3брова Cheлmińska PL", "Greenyard Frozen Poland Sp. z o.o. oddział Lipno PL", "Greenyard Frozen Poland Sp. z o.o. oddział Lipno PT PL", "GXO LOGISTICS BEVERAGES POLAND Sp. z o.o. oddział Kraków", "GXO LOGISTICS BEVERAGES POLAND Sp. z o.o. oddział Kraków PL", "H&M Hennes & Mauritz Logistics sp. z o.o. oddział 1", "H&M Hennes & Mauritz Logistics sp. z o.o. oddział 2", "Hamelin Polska Sp. z o.o. PT PL", "Hamelin Polska Sp. z o.o. ПZ", "Hamelin Polska Sp. z o.o. ПZwPT", "Hanplast Sp. z o.o.", "Hanplast Sp. z o.o. PL", "Hanza Electronics Prabuty Sp z o.o. PL", "HANZA ELECTRONICS PRABUTY Sp. z o.o. PL UZ", "Heesung Electronics Poland Sp. z o.o. Mława", "Heesung Electronics Poland Sp. z o.o. Mława PL", "Hennes Mauritz Logistics Sp. z o.o. PT PL", "Hermes Fulfilment Sp. z o.o. UZwPT", "Hermes Fulfilment Sp. z o.o. ПZwPT PL", "Hitachi Energy Poland Sp. z o.o.", "Hitachi Energy Poland Sp. z o.o. oddział Przasnysz PL", "Hitachi Energy Poland Sp. z o.o. PL", "HOPI PL POLAND Sp. z o.o. oddział Sochaczew", "HOPI PL POLAND Sp. z o.o. oddział Soчaczew PL", "HTL-STREFA S.A. PL", "Hutchinson Poland Sp. z o.o. oddział Bielsko-Biała PT", "HUTCHINSON POLAND sp. z o.o. oddział Kurчaki PT", "HUTCHINSON POLAND sp. z o.o. oddział Lodowa PT", "HUTCHINSON POLAND sp. z o.o. oddział Niciarniana PT", "Hutchinson Poland Sp. z o.o. oddział Żywiec 1", "Hutchinson Poland Sp. z o.o. oddział Żywiec 2", "ID LOGISTICS POLSKA S.A.", "IKEA Industry Poland. Sp. z o.o. Oddział IVAR в Stepnicy", "INDYKPOL S.A.", "KIRCHHOFF Polska Sp z o.o. PL", "Kongsberg Automotive Sp. z o.o. Włocławek PT", "Kongsberg Automotive Sp. z o.o. Włocławek PT PL", "KORAL S.A. oddział Kukinia", "LARO Sp. z o.o. PL", "Lear Corporation Poland II Sp. z o.o. Prusзков PT", "Lear Corporation Poland II Sp. z o.o. Prusзков PT PL", "LG Electronics Mława Sp. z o.o. Mława", "LG Electronics Wrocław Sp. z o.o. - LG Cem Biskupice Podгórне", "LG Electronics Wrocław Sp. z o.o. UZwPT", "LG Energy Solution Wrocław Sp. z o. o. UZwPT", "LG Energy Solution Wrocław Sp. z o. o. ПZwPT PL", "Lisner Poznań Sp. z o.o. oddział Charзyno UZwPT", "Lisner Poznań Sp. z o.o. UZwPT", "Lisner Poznań Sp. z o.o. ПZwPT PL", "LMV Industri AB", "Lotte wedel sp. z o.o", "Lotte Wedel SP. z o.o.", "LT Precision Poland Sp. z o.o. Siechnice", "Lucchini Poland Sp z o.o.", "LYNKA Sp. z o.o. ПZwPT", "MAFLOW PLASTICS POLAND Sp. z o.o", "Malta-Decor Sp. z o.o.", "MARCOPOL", "Mc Cormick Polska S.A. PL", "Meble Wójcik sp. z o.o. Elbląg", "Meble Wójcik sp. z o.o. Elbląg PL", "Mefa Industry Sp. z o.o.", "Mefa Industry Sp. z o.o. PL", "MEKOPRINT CABLES Sp z o.o. PL", "MEPRO POLAND Sp. z o.o.", "MID OCEAN LOGISTICS POLAND Sp. z.o.o.", "MID OCEAN LOGISTICS POLAND Sp. z.o.o. PL", "Minth Poland Sp. z.o.o.", "Minth Sanhua Auto Parts Poland Sp. z.o.o.", "Mondelez Polska Production Sp. z o.o. oddział Płońsk", "Mondelez Polska Production Sp. z o.o. oddział Płońsk PL", "Monдеlez Polska Production Sp. z o.o. oddział Skarbimierz", "Mondelez Polska Production Sp. z o.o. oddział Tomaszв", "Monдеlez Polska Production Sp. z o.o. oddział Tomaszмов PL", "MOTHERSON DRSC AUTOMOTIVE POLAND Sp. z o.o. PT", "MST Sp. z o.o Кętrзyn", "MTI-FURNINOVA POLSKA Sp. z o.o.", "MUVIQ POLAND Sp. z o.o.", "MUVIQ POLAND SP. Z O.O. PL", "Nara Battery Engineering Poland sp. z o.o. Bielany Wrocławские", "Nidec Motors & Actuators (Polska), Sp.z.o.o", "No Limit Sp. z o.o. Nadarzyn", "No Limit Sp. z o.o. Natolin", "No Limit Sp. z o.o. Prusзков", "No Limit Sp. z o.o. Radonice", "Norma Polska Sp. z o.o.", "Northern Light Service Sp. z o.o.", "NUCO E. i G. Kosyl s.j.", "OKNOPLAST Sp. z o.o. PT", "OKNOPLAST Sp. z o.o. PT PL", "OPONEO.PL S.A.", "OURHOME POLAND SP Z O.O.", "Pantos Logistics Poland Sp. z o.o. oddział Wrocław", "Pantos Logistics Poland Sp. z o.o. oddział Wrocław UZwPT", "Perfetti Van Melle Polska Production Sp. z o.o.", "Personnel Service sp. z o.o", "Personnel Service sp. z o.o.", "Personnel Service sp. z o.o. PL", "Piekarnia Jul-Ka Danuta Wojciechowska", "Pipelife Polska S.A.", "Polplast Polska Sp. z o.o.", "Re Alloys Sp. z o.o.", "Reco Polska Produkcja Sp. z o.o. Kalisz", "Reco Polska Produkcja Sp. z o.o. Kalisz ПZwPT", "Rhenus Logistics S.A. oddzial Swarзedз", "Romay Sp. z o.o. oddział Jelcz-Laskowice", "Rosti Poland Sp. z o.o.", "S.P.R.P. GAL L.P.M.Ł. Marek Sp. j.", "Saint-Gobain Innovative Materials Polska Sp. z o.o. oddział Dąброва Górnicza (HSZO)", "Saint-Gobain Innovative Materials Polska Sp. z o.o. oddział Dąброва Górnicза PL (HSZO)", "Salus International Sp. z o.o.", "Scania Industrial Batteries Sp. z o.o.", "Signify Poland sp. z o.o. oddział Кętrзyn", "Signify Poland sp. z o.o. oddział Кętrзyn ПZwPT", "Signify Poland sp. z o.o. oddział Piла", "Signify Poland sp. z o.o. oddział Piла ПZwPT", "Simoldes Plasticos Polska sp z o.o.", "Smyк Logistyka Sp. z o.o.", "SOPEM Sp. z o.o. PT", "SPÓŁDЗИЕЛЬНИЯ MLECZARSKA MLEKOVITA", "SRG Global Automotiv Poland Sp. z o.o. Bolesławiec", "TarnWell Sp. z o.o.", "Tenglong Polska Sp. z o.o.", "TI Poland sp. z o.o. Bielsko-Biała", "TI Poland sp. z o.o. Wieprz", "TMR PLASTICS Sp. z o.o.", "TMR PLASTICS Sp. z o.o. (Brygadzista ZZA)", "Toyota Boshoku Poland Sp. z o.o.", "Toyota Boshoku Poland Sp. z o.o. Выкроты UZ", "TPV Displays Polska Sp. z o.o.", "Trefl S.A.", "Trefl S.A. PL", "Tristone Flowtech Poland Sp. z o.o. Waлbrзych", "Tristone Flowtech Poland Sp. z o.o. Waлbrзych PL", "UPM RAFLATAC POLSKA SP. Z O.O. Nowa Wieś Wrocлawska PLUSI", "Asteelflash Poland Sp. z o.o.", "Valeo Autosystemy sp. z o.o.", "Valeo Autosystemy sp. z o.o. PL", "Valeo Electric and Electronic Systems Sp. z o.o.", "Valeo Service Eastern Europe sp. z o.o.", "Valmet Automotive Sp. z o.o. PL", "Vandemoortele Bakery Products Polska Sp. Z o.o.", "VIVE Textile Recycling Sp. z o.o.", "Volkswagen Motor Polska Sp. z o.o. oddział Polkowice PL", "Volkswagen Motor Polska Sp. z o.o. oddział Polkowice ПZwPT PL", "VOLKSWAGEN POZNAŃ Sp. z o.o.", "Wamtechnik Sp. z o.o.", "Wamtechnik Sp. z o.o. PL", "Wendre Poland Sp. z o.o.", "WIHA WERKZEUGE Sp. z o.o. PL", "Wschodni Front Sp. z o.o.", "Wschodni Front Sp. z o.o. PL", "ZEM в Eлku sp. z o.o. Eлk", "ZF Braking Systems Poland Sp. z.o.o PL", "ZF STEERING SYSTEMS POLAND Sp. z o.o. oddział Bielsko-Biała PT"];
 
-        const FINISH_HEADERS = ["LP", "PROJEKT", "Nr produkcyjny", "ПРІЗВИЩЕ", "ІМ'Я", "Дата народження", "Місце народження", "Серія и номер паспорта", "Дата видачі", "Дата закінчения", "Громадянство", "Країна", "Стать", "PARA/RODZINA", "EMAIL (INT)", "Hasło", "Konto bankowe", "Pesel", "NIP", "Sposób затруднения", "Karta Polaka (U)", "BIOMETRYCZNY (V)", "Wiza numer", "Wiza wydana", "Wiza OD", "Wiza DO", "Wojewódзтвo (AA)", "Район (AB)", "Населений пункт (AC)", "Вулиця, номер (AD)", "Індекс (AE)", "ІМ'Я БАТЬКА", "ІМ'Я МАТЕРІ", "Viber (AH)", "Tel UA (AI)", "Взуття (AJ)", "Талия (AK)", "Футболка (AL)", "Рост (AM)", "UWAGI (AN)", "Tel PL (AO)", "Фамилия рожд (AP)", "Девичья мат (AQ)", "Орган (AR)", "Tax ID UA (AS)", "Email (AT)"];
-        const HIDDEN_UI_COLS = [0, 2, 14, 15, 18, 19, 39]; 
-        
-        const UI_DISPLAY_HEADERS = [
-            "PROJEKT", "NAZWISKO", "IMIĘ", "DATA URODZENIA", "MIEJSCE URODZENIA", "SERIA I NUMER PASZPORTU", 
-            "DATA WYDANIA", "DATA WAŻNOŚCI", "OBYWATELSTWO", "KRAJ", "PŁEĆ", "PARA/RODZINA", 
-            "KONTO BANKOWE", "PESEL", "KARTA POLAKA (U)", "BIOMETRYCZNY (V)", "NUMER WIZY", "WIZA WYDANA", 
-            "WIZA OD", "WIZA DO", "WOJEWÓDZTWO (AA)", "POWIAT (AB)", "MIEJSCOWOŚĆ (AC)", "ULICA, NUMER (AD)", 
-            "KOD POCZTOWY (AE)", "IMIĘ OJCA", "IMIĘ MATKI", "VIBER (AH)", "TEL UA (AI)", "BUTY (AJ)", 
-            "TALIA (AK)", "KOSZULKA (AL)", "WZROST (AM)", "TEL PL (AO)", "NAZWISKO RODOWE (AP)", 
-            "NAZWISKO RODOWE MATKI (AQ)", "ORGAN (AR)", "PESEL UA / NIP (AS)", "EMAIL (AT)"
-        ];
-
-        const MAPPING = { 6: 3, 7: 4, 8: 5, 9: 6, 10: 7, 11: 8, 12: 9, 13: 10, 14: 11, 15: 12, 16: 17, 17: 20, 18: 21, 19: 22, 20: 23, 21: 24, 22: 25, 23: 26, 24: 27, 25: 28, 26: 29, 27: 30, 28: 31, 29: 32, 30: 33, 31: 34, 32: 35, 33: 36, 34: 37, 35: 38, 36: 40, 37: 41, 38: 42, 39: 43, 40: 44, 41: 45 };
-        const POINT_FIELDS = [26, 27, 28, 29, 30, 17, 41, 42, 43, 45];
-        const VISA_INDICES = [22, 23, 24, 25]; 
+        const FINISH_HEADERS = Array.from({ length: 52 }, (_,i) => Finisz.byId[i].label);
+        const PREVIEW_FIELDS = Finisz.fields.filter(f => !f.hidden);
+        const POINT_FIELDS = Finisz.fields.filter(f => f.required).map(f => f.id);
 
         let rawData = [];
         let processedData = []; 
@@ -344,90 +332,40 @@
         let incorrectDataLog = [];
         let checkStates = { pesel: false, passport: false, phone: false, postcode: false, email: false };
 
-        const utils = {
-            parseDate: (val) => {
-                if (!val) return null;
-                if (val instanceof Date) return val;
-                if (!isNaN(val) && Number(val) > 30000) return new Date(Math.round((val - 25569) * 86400 * 1000));
-                const s = String(val).replace(/[-/]/g, '.');
-                const p = s.split('.');
-                if (p.length === 3) {
-                    if (p[0].length === 4) return new Date(p[0], p[1]-1, p[2]);
-                    return new Date(p[2], p[1]-1, p[0]);
-                }
-                return null;
-            },
-            formatDate: (d) => d && !isNaN(d.getTime()) ? d.toLocaleDateString('ru-RU').padStart(10, '0') : "",
-            isValidEmail: (e) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e),
-            formatStreet: (val) => {
-                if (!val) return "";
-                let s = String(val).trim().toUpperCase();
-                if (s.includes(',')) return s.split(',').map(x => x.trim()).join(', ');
-                const parts = s.split(/\s+/);
-                if (parts.length >= 2) {
-                    const lastPart = parts[parts.length - 1];
-                    if (/^\d/.test(lastPart)) return `${parts.slice(0,-1).join(' ')}, ${lastPart}`;
-                }
-                return s;
-            }
-        };
+        const escapeHTML = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
         const safeSetText = (id, text) => { const el = document.getElementById(id); if (el) el.innerText = text; };
 
         function analyzeReadiness() {
             techFixesLog = []; missingDataLog = []; incorrectDataLog = [];
             checkStates = { pesel: true, passport: true, phone: true, postcode: true, email: true };
-
-            if (processedData.length === 0) {
+            if (!processedData.length) {
                 Object.keys(checkStates).forEach(k => checkStates[k] = false);
-                updateUI(0);
-                return;
+                updateUI(0); return;
             }
-
             let earnedPoints = 0;
-            const maxPoints = processedData.length * 10;
-
             processedData.forEach((rowObj, i) => {
-                const d = rowObj.data;
-                const line = i + 1;
-                const name = rowObj.name;
-                let rowPts = 0;
-
-                const pClean = String(d[17] || '').replace(/\D/g, '');
-                if (d[17] && pClean.length === 11) rowPts++;
-                else { checkStates.pesel = false; if(d[17]) incorrectDataLog.push({ line, name, field: 'PESEL', reason: '11 cyfr' }); }
-
-                [26,27,28,29,30].forEach(idx => {
-                    if(d[idx]) rowPts++;
-                    else missingDataLog.push({ line, name, field: FINISH_HEADERS[idx] });
-                });
-                if (!d[30] || !/^\d{2}-\d{3}$/.test(d[30])) checkStates.postcode = false;
-
-                [41,42,43].forEach(idx => {
-                    if(d[idx]) rowPts++;
-                    else missingDataLog.push({ line, name, field: FINISH_HEADERS[idx] });
-                });
-
-                if (d[45] && utils.isValidEmail(d[45])) rowPts++;
-                else { checkStates.email = false; if(d[45]) incorrectDataLog.push({ line, name, field: 'Email', reason: 'Składnia' }); else missingDataLog.push({ line, name, field: 'Email' }); }
-
-                if (!d[7]) checkStates.passport = false;
-                if (!d[33] && !d[34]) checkStates.phone = false;
-
-                const filledVisa = VISA_INDICES.filter(idx => d[idx]).length;
-                if (filledVisa > 0 && filledVisa < 4) missingDataLog.push({ line, name, field: 'DANE WIZOWE (niepełne)' });
-
-                earnedPoints += rowPts;
-
-                for (const [tIdx, origVal] of Object.entries(rowObj.originalValues)) {
-                    const currVal = d[tIdx];
-                    if (origVal && currVal && String(origVal).toUpperCase().trim() !== String(currVal).trim()) {
-                        techFixesLog.push({ line, name, field: FINISH_HEADERS[tIdx], before: origVal, after: currVal });
+                Finisz.derive(rowObj.data);
+                const d = rowObj.data, line = i + 1, name = rowObj.name;
+                const result = Finisz.validate(rowObj);
+                result.missing.forEach(id => missingDataLog.push({ line, name, field: FINISH_HEADERS[id] }));
+                result.errors.forEach(e => incorrectDataLog.push({ line, name, field: FINISH_HEADERS[e.ids[0]], reason: e.reason }));
+                const valid = id => !!d[id] && !result.invalid.has(id);
+                checkStates.pesel &&= valid(17);
+                checkStates.passport &&= [7,8,9].every(valid);
+                checkStates.phone &&= [33,34].every(valid) && (!d[40] || valid(40));
+                checkStates.postcode &&= valid(30);
+                checkStates.email &&= valid(45);
+                const optionalErrors = [...result.invalid].filter(id => !POINT_FIELDS.includes(id)).length;
+                earnedPoints += Math.max(0, POINT_FIELDS.filter(valid).length - optionalErrors);
+                for (const [id, before] of Object.entries(rowObj.originalValues)) {
+                    const after = d[id];
+                    if (String(before) !== String(after) && String(before) !== '') {
+                        techFixesLog.push({ line, name, field: FINISH_HEADERS[id], before, after });
                     }
                 }
             });
-
-            updateUI(Math.round((earnedPoints / maxPoints) * 100));
+            updateUI(Math.round(100 * earnedPoints / (processedData.length * POINT_FIELDS.length)));
         }
 
         function updateUI(percent) {
@@ -444,17 +382,17 @@
             ['chk-pesel','chk-passport','chk-phone','chk-postcode','chk-email'].forEach(id => setChk(id, checkStates[id.split('-')[1]]));
 
             const fl = document.getElementById('fixList');
-            if(fl) fl.innerHTML = techFixesLog.slice(0, 30).map(f => `<tr><td class="p-3 font-bold text-slate-500">#${f.line}</td><td class="p-3 text-[10px] text-slate-200 font-bold truncate max-w-[80px]">${f.name}</td><td class="p-3 text-[10px]"><span class="strike-through text-slate-600">${f.before}</span> → <span class="text-amber-400 font-bold">${f.after}</span></td></tr>`).join('') || '<tr><td class="p-4 text-center text-slate-500 italic uppercase">Brak zmian</td></tr>';
+            if(fl) fl.innerHTML = techFixesLog.slice(0, 30).map(f => `<tr><td class="p-3 font-bold text-slate-500">#${f.line}</td><td class="p-3 text-[10px] text-slate-200 font-bold truncate max-w-[80px]">${escapeHTML(f.name)}</td><td class="p-3 text-[10px]"><span class="strike-through text-slate-600">${escapeHTML(f.before)}</span> → <span class="text-amber-400 font-bold">${escapeHTML(f.after)}</span></td></tr>`).join('') || '<tr><td class="p-4 text-center text-slate-500 italic uppercase">Brak zmian</td></tr>';
 
             const mg = document.getElementById('missingGroups');
             if(mg) {
                 const grouped = {};
                 missingDataLog.forEach(m => { if(!grouped[m.name]) grouped[m.name] = []; grouped[m.name].push(m.field); });
-                mg.innerHTML = Object.entries(grouped).map(([name, fields]) => `<div class="bg-rose-500/5 p-4 rounded-xl border border-rose-500/10 text-slate-400"><p class="font-black text-rose-400 text-[10px] uppercase tracking-widest">${name}</p><p class="text-[10px] font-medium mt-1">Puste: ${[...new Set(fields)].join(', ')}</p></div>`).join('') || '<p class="text-center text-slate-500 italic py-4 uppercase tracking-widest">Wszystko wypełnione</p>';
+                mg.innerHTML = Object.entries(grouped).map(([name, fields]) => `<div class="bg-rose-500/5 p-4 rounded-xl border border-rose-500/10 text-slate-400"><p class="font-black text-rose-400 text-[10px] uppercase tracking-widest">${escapeHTML(name)}</p><p class="text-[10px] font-medium mt-1">Puste: ${escapeHTML([...new Set(fields)].join(', '))}</p></div>`).join('') || '<p class="text-center text-slate-500 italic py-4 uppercase tracking-widest">Wszystko wypełnione</p>';
             }
 
             const el = document.getElementById('errorList');
-            if(el) el.innerHTML = incorrectDataLog.map(e => `<tr class="hover:bg-orange-500/5"><td class="p-4 font-bold text-slate-500">#${e.line}</td><td class="p-4 text-slate-300 font-black text-[10px] truncate max-w-[80px]">${e.name}</td><td class="p-4 text-orange-400 font-black text-[10px] uppercase tracking-widest">${e.reason}</td></tr>`).join('') || '<tr><td class="p-4 text-center text-slate-500 italic uppercase">Brak błędów</td></tr>';
+            if(el) el.innerHTML = incorrectDataLog.map(e => `<tr class="hover:bg-orange-500/5"><td class="p-4 font-bold text-slate-500">#${e.line}</td><td class="p-4 text-slate-300 font-black text-[10px] truncate max-w-[80px]">${escapeHTML(e.name)}</td><td class="p-4 text-orange-400 font-black text-[10px] uppercase tracking-widest">${escapeHTML(e.reason)}</td></tr>`).join('') || '<tr><td class="p-4 text-center text-slate-500 italic uppercase">Brak błędów</td></tr>';
         }
 
         // --- Documents ---
@@ -584,25 +522,13 @@
         function runProcessing() {
             const project = document.getElementById('projectInput').value.trim();
             if (!rawData.length) return;
-            processedData = [];
-            for (let i = 1; i < rawData.length; i++) {
-                const src = rawData[i];
-                if (!src[6] && !src[7]) continue;
-                const data = new Array(FINISH_HEADERS.length).fill("");
-                const originalValues = {}; 
-                data[1] = project.toUpperCase();
-                for (const [sIdx, tIdx] of Object.entries(MAPPING)) {
-                    let rawVal = String(src[sIdx] || "").trim();
-                    originalValues[tIdx] = rawVal;
-                    let clean = rawVal.toUpperCase();
-                    if (tIdx === 7) clean = clean.replace(/\s+/g, '');
-                    if (tIdx === 29) clean = utils.formatStreet(clean);
-                    data[tIdx] = clean;
-                }
-                [5, 8, 9].forEach(idx => { const d = utils.parseDate(data[idx]); if (d) data[idx] = utils.formatDate(d); });
-                if (data[30]) { const dgt = data[30].replace(/\D/g, ''); if (dgt.length === 5) data[30] = dgt.slice(0,2) + '-' + dgt.slice(2); }
-                processedData.push({ data, originalValues, name: `${src[6]||''} ${src[7]||''}`.trim() || `Запись ${i}` });
-            }
+            processedData = rawData.map(source => {
+                const row = { ...source, data: [...source.data], originalValues: { ...source.originalValues }, importErrors: { ...source.importErrors } };
+                row.data[1] = project.toUpperCase();
+                for (const field of Finisz.fields) row.data[field.id] = Finisz.normalizeValue(field.id, row.data[field.id]);
+                Finisz.derive(row.data);
+                return row;
+            });
             analyzeReadiness(); renderTable();
             ['emptyState', 'tableWrapper', 'dashboardSection', 'downloadBtn', 'sidebarLogo'].forEach(id => {
                 const el = document.getElementById(id);
@@ -615,9 +541,9 @@
 
         function renderTable() {
             const head = document.getElementById('headerRow');
-            const filteredIndices = FINISH_HEADERS.map((_, i) => i).filter(i => !HIDDEN_UI_COLS.includes(i));
+            const filteredIndices = PREVIEW_FIELDS.map(f => f.id);
             head.innerHTML = `<th class="p-5 border-b border-white/5 text-[10px] uppercase font-black text-slate-500 whitespace-nowrap bg-[#1e293b] sticky-col !z-[45]">DOKUMENTY</th>` + 
-                filteredIndices.map((idx, uiIdx) => `<th class="p-5 border-b border-white/5 text-[9px] uppercase font-black text-slate-600 whitespace-nowrap bg-[#1e293b] ${idx <= 4 ? 'sticky-col !bg-[#1e293b] z-30' : ''}">${UI_DISPLAY_HEADERS[uiIdx]}</th>`).join('');
+                filteredIndices.map((idx, uiIdx) => `<th class="p-5 border-b border-white/5 text-[9px] uppercase font-black text-slate-600 whitespace-nowrap bg-[#1e293b] ${idx <= 4 ? 'sticky-col !bg-[#1e293b] z-30' : ''}">${escapeHTML(PREVIEW_FIELDS[uiIdx].label)}</th>`).join('');
             const body = document.getElementById('tableBody');
             if (!body) return; body.innerHTML = '';
             processedData.forEach((rowObj, rIdx) => {
@@ -628,25 +554,20 @@
                 docTd.className = "p-5 border-b border-white/5 sticky-col !z-40 text-center";
                 docTd.innerHTML = `<button onclick="openDocModal(${rIdx})" class="w-10 h-10 rounded-xl ${hasDocs ? 'bg-emerald-500 text-white shadow-[0_0_15px_rgba(16,185,129,0.3)]' : 'bg-slate-800 text-slate-500'} hover:scale-105 transition-all flex items-center justify-center"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path><path d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path></svg></button>`;
                 tr.appendChild(docTd);
-                const filledVisa = VISA_INDICES.filter(idx => rowObj.data[idx]).length;
-                const isVisaInconsistent = filledVisa > 0 && filledVisa < 4;
                 filteredIndices.forEach(idx => {
                     const td = document.createElement('td');
                     const cell = rowObj.data[idx];
                     let cls = `p-5 border-b border-white/5 text-[11px] text-slate-400 font-medium whitespace-nowrap ${idx <= 4 ? 'sticky-col !text-white font-black z-10' : ''}`;
-                    if (POINT_FIELDS.includes(idx)) {
-                        if (!cell) cls += " cell-error";
-                        else if (idx === 17 && String(cell).replace(/\D/g,'').length !== 11) cls += " cell-error";
-                        else if (idx === 45 && !utils.isValidEmail(cell)) cls += " cell-error";
-                    }
-                    if (isVisaInconsistent && VISA_INDICES.includes(idx)) cls += " cell-error";
-                    if (rowObj.originalValues[idx] && String(rowObj.originalValues[idx]).toUpperCase() !== String(cell).toUpperCase()) cls += " cell-warning";
+                    if (rowObj.invalid?.has(idx)) cls += " cell-error";
+                    else if (rowObj.originalValues[idx] !== undefined && String(rowObj.originalValues[idx]) !== String(cell)) cls += " cell-warning";
                     td.className = cls; td.innerText = cell || '';
-                    if (idx !== 0 && idx !== 39) {
+                    if (!Finisz.byId[idx].derived && idx !== 0 && idx !== 39) {
                         td.contentEditable = "true";
                         td.onblur = () => {
-                            let val = td.innerText.trim().toUpperCase();
-                            if (idx === 29) val = utils.formatStreet(val);
+                            const input = td.innerText;
+                            const val = Finisz.normalizeValue(idx, input);
+                            if (input !== String(rowObj.data[idx])) delete rowObj.importErrors[idx];
+                            if (rowObj.originalValues[idx] === undefined) rowObj.originalValues[idx] = input;
                             rowObj.data[idx] = val; td.innerText = val;
                             analyzeReadiness(); renderTable();
                         };
@@ -678,22 +599,34 @@
             document.getElementById('fileStatusText').innerText = file.name;
             const reader = new FileReader();
             reader.onload = (evt) => {
-                const wb = XLSX.read(new Uint8Array(evt.target.result), { type: 'array' });
-                rawData = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { header: 1 });
-                runProcessing();
+                try {
+                    const wb = XLSX.read(new Uint8Array(evt.target.result), { type: 'array', cellNF: true });
+                    const candidates = Finisz.readQuestionnaire(wb);
+                    if (!candidates.length) throw new Error('Ankieta nie zawiera danych kandydatów.');
+                    rawData = candidates;
+                    runProcessing();
+                } catch (error) { alert(`Nie udało się wczytać ankiety: ${error.message}`); }
             };
             reader.readAsArrayBuffer(file);
         };
         document.getElementById('docUploadInput').onchange = handleDocUpload;
         document.getElementById('zipDownloadBtn').onclick = processAndZip;
-        document.getElementById('downloadBtn').onclick = () => {
+        document.getElementById('downloadBtn').onclick = async () => {
             const d = new Date();
             const dateStr = `${String(d.getDate()).padStart(2,'0')}.${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getFullYear()).slice(-2)}`;
             const fileName = `FINISZ_${projectInput.value.trim() || 'PROJECT'}_${dateStr}_${processedData.length}OS.XLSX`;
-            const ws = XLSX.utils.aoa_to_sheet([FINISH_HEADERS, ...processedData.map(r => r.data)]);
-            const wb = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(wb, ws, "FINISH");
-            XLSX.writeFile(wb, fileName);
+            const button = document.getElementById('downloadBtn');
+            button.disabled = true;
+            try {
+                const response = await fetch('FINISZ.xlsx');
+                if (!response.ok) throw new Error('Nie można pobrać szablonu FINISZ.xlsx');
+                const output = await Finisz.exportTemplate(await response.arrayBuffer(), processedData);
+                const url = URL.createObjectURL(new Blob([output], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' }));
+                const a = document.createElement('a');
+                a.href = url; a.download = fileName; a.click();
+                setTimeout(() => URL.revokeObjectURL(url), 1000);
+            } catch (error) { alert(`Nie udało się wyeksportować FINISZ: ${error.message}`); }
+            finally { button.disabled = false; }
         };
         ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(n => document.getElementById('dropZone').addEventListener(n, e => { 
             e.preventDefault(); if(n === 'dragenter' || n === 'dragover') e.currentTarget.classList.add('active'); else e.currentTarget.classList.remove('active');
