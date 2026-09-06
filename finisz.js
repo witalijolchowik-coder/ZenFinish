@@ -78,7 +78,7 @@ const Finisz = (() => {
         m = s.match(/^(\d{1,2})[-/.](\d{1,2})[-/.](\d{4})$/);
         return m ? calendarDate(+m[3], +m[2], +m[1]) : null;
     }
-    const formatDate = d => d ? `${String(d.getUTCDate()).padStart(2,'0')}.${String(d.getUTCMonth()+1).padStart(2,'0')}.${d.getUTCFullYear()}` : '';
+    const formatDate = d => d ? `${d.getUTCFullYear()}-${String(d.getUTCMonth()+1).padStart(2,'0')}-${String(d.getUTCDate()).padStart(2,'0')}` : '';
     function excelDate(serial, date1904) {
         if (!Number.isFinite(serial) || serial < 0 || (!date1904 && Math.floor(serial) === 60)) return null;
         const parsed = XLSX.SSF.parse_date_code(serial, { date1904: !!date1904 });
@@ -162,6 +162,7 @@ const Finisz = (() => {
         let s = String(value ?? '').trim().replace(/\s+/g, ' ');
         if (id === 45) return s.replace(/\s*@\s*/g, '@').toLowerCase();
         s = s.toUpperCase();
+        if (id === 10 && ['UKRAIŃSKE','UKRAIŃSKIE','UKRAINSKE','UKRAINSKIE','УКРАЇНСЬКЕ'].includes(s)) return 'UKRAIŃSKIE';
         if (id === 7) return s.replace(/\s/g, '');
         if (id === 17) return s.replace(/[\s.\-]/g, '');
         if (dateIds.includes(id)) return formatDate(parseDate(s)) || s;
