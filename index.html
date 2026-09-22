@@ -277,7 +277,8 @@
                     <p class="text-[10px] text-slate-500 font-bold uppercase tracking-widest mt-1">Ręczne zarządzanie pakietem dokumentów</p>
                 </div>
                 <div class="flex items-center gap-4">
-                    <button id="zipDownloadBtn" class="bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-black px-8 py-3 rounded-xl uppercase tracking-widest shadow-xl active:scale-95 transition-all text-slate-800 font-black">POBIERZ ZIP</button>
+                    <button id="saveFilesBtn" class="bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-black px-8 py-3 rounded-xl uppercase tracking-widest shadow-xl active:scale-95 transition-all">ZAPISZ PLIKI</button>
+                    <button id="zipDownloadBtn" class="bg-slate-700 hover:bg-slate-600 text-white text-[11px] font-black px-6 py-3 rounded-xl uppercase tracking-widest shadow-xl active:scale-95 transition-all">POBIERZ ZIP</button>
                     <button onclick="closeDocModal()" class="w-12 h-12 flex items-center justify-center rounded-xl hover:bg-white/5 text-slate-500 text-2xl font-black">&times;</button>
                 </div>
             </div>
@@ -396,18 +397,29 @@
         }
 
         // --- Documents ---
+        function resetDocuments() {
+            Object.values(rowDocs).flat().forEach(d => { if (d.preview) URL.revokeObjectURL(d.preview); });
+            rowDocs = {};
+            currentEditingRow = null;
+            selectedFileIdx = null;
+            document.getElementById('docUploadInput').value = '';
+            document.getElementById('docModal').classList.add('hidden');
+            renderDocPreviews(); updateTypeButtons();
+        }
+
         function openDocModal(rIdx) {
             currentEditingRow = rIdx;
             selectedFileIdx = null;
             const row = processedData[rIdx];
             document.getElementById('modalPersonName').innerText = `${row.data[4]} ${row.data[3]}`;
-            renderDocPreviews();
+            renderDocPreviews(); updateTypeButtons();
             document.getElementById('docModal').classList.remove('hidden');
         }
 
         function closeDocModal() { document.getElementById('docModal').classList.add('hidden'); renderTable(); }
 
         async function handleDocUpload(e) {
+            if (currentEditingRow === null) return;
             const files = Array.from(e.target.files);
             if (!rowDocs[currentEditingRow]) rowDocs[currentEditingRow] = [];
             for (const file of files) {
@@ -415,6 +427,17 @@
                 rowDocs[currentEditingRow].push({ file, preview, type: null, label: null, name: 'BEZ_TYPU', rotation: 0 });
             }
             renderDocPreviews();
+            e.target.value = '';
+        }
+
+        function deleteDocument(idx) {
+            const files = rowDocs[currentEditingRow];
+            if (!files?.[idx]) return;
+            if (files[idx].preview) URL.revokeObjectURL(files[idx].preview);
+            files.splice(idx, 1);
+            if (selectedFileIdx === idx) selectedFileIdx = null;
+            else if (selectedFileIdx !== null && selectedFileIdx > idx) selectedFileIdx--;
+            renderDocPreviews(); updateTypeButtons(); renderTable();
         }
 
         function renderDocPreviews() {
@@ -427,6 +450,7 @@
                         <div class="doc-mask">
                             <span class="mask-text" contenteditable="${d.type === 'INNE'}" onblur="updateInneLabel(${i}, this.innerText)" onclick="${d.type === 'INNE' ? 'event.stopPropagation()' : ''}">${d.label || ''}</span>
                         </div>
+                        <button type="button" aria-label="Usuń dokument" title="Usuń dokument" onpointerdown="event.preventDefault()" onclick="event.stopPropagation(); deleteDocument(${i})" class="absolute top-2 right-2 z-20 w-8 h-8 rounded-lg bg-rose-600 hover:bg-rose-500 text-white text-xl font-bold shadow-xl">&times;</button>
                         <button onclick="event.stopPropagation(); rotateFile(${i})" class="rotate-btn absolute bottom-2 right-2 w-8 h-8 rounded-lg flex items-center justify-center text-white shadow-xl"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg></button>
                     </div>
                     <div class="mt-3 px-1">
@@ -446,8 +470,11 @@
             const fullName = `${firstName}_${lastName}`;
             let cleanLabel = newText.trim().toUpperCase().replace(/\s+/g, '_');
             if(!cleanLabel) cleanLabel = "INNE";
-            rowDocs[currentEditingRow][idx].label = cleanLabel;
-            rowDocs[currentEditingRow][idx].name = `${fullName}_${cleanLabel}`;
+            const usedNames = new Set(rowDocs[currentEditingRow].filter((f,i) => i !== idx && f.type).map(f => f.name.toUpperCase()));
+            let label = cleanLabel, suffix = 2;
+            while (usedNames.has(`${fullName}_${label}`)) label = `${cleanLabel}_${suffix++}`;
+            rowDocs[currentEditingRow][idx].label = label;
+            rowDocs[currentEditingRow][idx].name = `${fullName}_${label}`;
             renderDocPreviews();
         }
 
@@ -458,16 +485,13 @@
             const firstName = String(row.data[4]).toUpperCase().replace(/\s+/g, '_');
             const lastName = String(row.data[3]).toUpperCase().replace(/\s+/g, '_');
             const fullName = `${firstName}_${lastName}`;
-            const existingCount = files.filter((f, idx) => f.type === type && idx !== selectedFileIdx).length;
-            const nextIndex = existingCount + 1;
+            const usedNames = new Set(files.filter((f, idx) => idx !== selectedFileIdx && f.type).map(f => f.name.toUpperCase()));
             const typeStr = type.toUpperCase();
-            let label = "";
-            if (type === 'PASZPORT') label = nextIndex === 1 ? typeStr : `${typeStr}_${nextIndex}`;
-            else if (type === 'PESEL') label = nextIndex === 1 ? typeStr : `${typeStr}_${nextIndex}`;
-            else if (type === 'KP') label = `KP${nextIndex}`;
-            else if (type === 'DECYZJA_KP') label = nextIndex === 1 ? `DECYZJA_KP` : `DECYZJA_KP_${nextIndex}`;
-            else if (type === 'WIZA') label = nextIndex === 1 ? typeStr : `${typeStr}_${nextIndex}`;
-            else label = nextIndex === 1 ? typeStr : `${typeStr}_${nextIndex}`;
+            let label, nextIndex = 1;
+            do {
+                label = type === 'KP' ? `KP${nextIndex}` : nextIndex === 1 ? typeStr : `${typeStr}_${nextIndex}`;
+                nextIndex++;
+            } while (usedNames.has(`${fullName}_${label}`));
             files[selectedFileIdx].type = type;
             files[selectedFileIdx].label = label;
             files[selectedFileIdx].name = `${fullName}_${label}`;
@@ -476,8 +500,31 @@
 
         function updateTypeButtons() {
             const btns = document.querySelectorAll('.type-btn');
-            const currentType = selectedFileIdx !== null ? rowDocs[currentEditingRow][selectedFileIdx].type : null;
+            const currentType = selectedFileIdx !== null ? rowDocs[currentEditingRow]?.[selectedFileIdx]?.type : null;
             btns.forEach(b => b.classList.toggle('active', b.getAttribute('onclick').includes(`'${currentType}'`)));
+        }
+
+        async function saveDocumentFiles() {
+            if (typeof window.showDirectoryPicker !== 'function') return processAndZip();
+            const files = (rowDocs[currentEditingRow] || []).filter(f => f.type).map(f => ({ ...f }));
+            if (!files.length) return;
+            const button = document.getElementById('saveFilesBtn');
+            button.disabled = true;
+            let saved = 0;
+            try {
+                // Invoke directly from the click, before any asynchronous image processing.
+                const directory = await window.showDirectoryPicker({ mode: 'readwrite' });
+                for (const f of files) {
+                    const data = f.rotation !== 0 && f.file.type.startsWith('image/') ? await applyRotation(f.file, f.rotation) : f.file;
+                    const handle = await directory.getFileHandle(`${f.name}.${f.file.name.split('.').pop()}`, { create: true });
+                    const writable = await handle.createWritable();
+                    try { await writable.write(data); await writable.close(); }
+                    catch (error) { await writable.abort().catch(() => {}); throw error; }
+                    saved++;
+                }
+            } catch (error) {
+                if (error.name !== 'AbortError') alert(`Nie udało się zapisać wszystkich plików (zapisano ${saved}/${files.length}): ${error.message}`);
+            } finally { button.disabled = false; }
         }
 
         async function processAndZip() {
@@ -499,12 +546,15 @@
             a.href = URL.createObjectURL(content);
             a.download = `${firstName}_${lastName}_PASZPORT.ZIP`;
             a.click();
+            setTimeout(() => URL.revokeObjectURL(a.href), 1000);
         }
 
         function applyRotation(file, degree) {
-            return new Promise(res => {
+            return new Promise((res, reject) => {
                 const img = new Image();
+                const url = URL.createObjectURL(file);
                 img.onload = () => {
+                    URL.revokeObjectURL(url);
                     const canvas = document.createElement('canvas');
                     const ctx = canvas.getContext('2d');
                     if (degree === 90 || degree === 270) { canvas.width = img.height; canvas.height = img.width; }
@@ -512,9 +562,10 @@
                     ctx.translate(canvas.width/2, canvas.height/2);
                     ctx.rotate(degree * Math.PI / 180);
                     ctx.drawImage(img, -img.width/2, -img.height/2);
-                    canvas.toBlob(blob => res(blob), file.type);
+                    canvas.toBlob(blob => blob ? res(blob) : reject(new Error('Nie udało się obrócić obrazu')), file.type);
                 };
-                img.src = URL.createObjectURL(file);
+                img.onerror = () => { URL.revokeObjectURL(url); reject(new Error('Nie można odczytać obrazu')); };
+                img.src = url;
             });
         }
 
@@ -603,6 +654,7 @@
                     const wb = XLSX.read(new Uint8Array(evt.target.result), { type: 'array', cellNF: true });
                     const candidates = Finisz.readQuestionnaire(wb);
                     if (!candidates.length) throw new Error('Ankieta nie zawiera danych kandydatów.');
+                    resetDocuments();
                     rawData = candidates;
                     runProcessing();
                 } catch (error) { alert(`Nie udało się wczytać ankiety: ${error.message}`); }
@@ -610,6 +662,7 @@
             reader.readAsArrayBuffer(file);
         };
         document.getElementById('docUploadInput').onchange = handleDocUpload;
+        document.getElementById('saveFilesBtn').onclick = saveDocumentFiles;
         document.getElementById('zipDownloadBtn').onclick = processAndZip;
         document.getElementById('downloadBtn').onclick = async () => {
             const d = new Date();
